@@ -1,6 +1,8 @@
 # Enunciado general del tp.
 
-En resumen se trata de un sistema de administración de "tokens", que permite transacciones entre usuarios de una moneda virtual sin valor real. Este sistema puede usarse tanto de manera lúdica como seria (algunos ejemplos serían usarlo como programa de recompensas de alguna tienda o como administración de puntaje de alguna dinámica informal). 
+En resumen se trata de un sistema de administración de "tokens", que permite transacciones entre usuarios de una moneda virtual sin valor real. Este sistema puede usarse tanto de manera lúdica como seria (algunos ejemplos serían usarlo como programa de recompensas de alguna tienda o como administración de puntaje de alguna dinámica informal).
+
+tokenizate.com.ar
 
 ## ABMC
 - Usuario
@@ -39,10 +41,14 @@ API REST  frontend parcial  NodeJS. Express  Angular
 (o utilizar el TP (idea) del año 2017)
 
 ### 1.2 - Funcionalidad
-|Requerimiento funcional|cant. mín.<br>1 o 2 integ|Cumple?|
-|:-|:-|:-|-|
-|ABMC simple|1|
-|ABMC dependiente|1|
-|Listado simple|1|
-|Listado complejo obligatorio|1|
-|Detalle básico|1|
+
+1 de cada uno:
+
+|Requerimiento funcional|Descripcion|Cumple?|
+|:-|:-|-|
+|ABMC simple|Usuario|
+|ABMC dependiente|Tokens|
+|Listado simple|Tipos de tokens|
+|Listado complejo obligatorio|Personas|
+|Detalle básico|Usuario y permisos|
+
