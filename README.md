@@ -26,7 +26,7 @@ En resumen se trata de un sistema de administración de "tokens", que permite tr
 ## Equipo
 Santiago Abud - legajo 47015
 ## Modelo de dominio
- ![Modelo de dominio del Sistema de Tokens](md.png)
+ ![Modelo de dominio del Sistema de Tokens](modelo-de-dominio.png)
 ## Tecnologías:
 - NodeJS
 - Express
