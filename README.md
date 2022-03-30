@@ -11,6 +11,7 @@ En resumen se trata de un sistema de administración de "tokens", que permite tr
   - Contraseña
   - Correo
   - DNI
+  - Habilitado
 ## ABMC dependiente
 - Tokens
   - Dueño (Usuario)
@@ -25,10 +26,7 @@ En resumen se trata de un sistema de administración de "tokens", que permite tr
 ## Equipo
 Santiago Abud - legajo 47015
 ## Modelo de dominio
-
-
-  * Modelo de dominio o modelo de datos. Una imagen referenciada.
-
+ ![Modelo de dominio del Sistema de Tokens](md.png)
 ## Tecnologías:
 - NodeJS
 - Express
