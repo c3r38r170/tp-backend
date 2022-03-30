@@ -6,25 +6,22 @@ tokenizate.com.ar
 
 ## ABMC
 - Usuario
-  - ID?
   - Nombre completo
   - Nombre de usuario
   - Contraseña
   - Correo
   - DNI
-  - Permisos?
 ## ABMC dependiente
 - Tokens
-  - ID?^
-  - Dueño
+  - Dueño (Usuario)
 ## Listado simple
 - Tipos de tokens para enviar
 ## Listado complejo
-- Personas para enviar token (filtrado en frontend cuenta?)
+- Personas para enviar token (filtrado en backend)
 - Filtra por nombre, nick o DNI
 ## Detalle
 - Usuario y permisos
-- Por ID de usuario o todos. (?)
+- Por ID de usuario o por ID de permiso.
 ## Equipo
 Santiago Abud - legajo 47015
 ## Modelo de dominio
@@ -32,13 +29,13 @@ Santiago Abud - legajo 47015
 
   * Modelo de dominio o modelo de datos. Una imagen referenciada.
 
-API REST  frontend parcial  NodeJS. Express  Angular
-- ODM/ORM con una base de datos persistente acorde a la tecnología que se utilice.
-  - Squelize? https://sequelize.org/v6/ 
-- CSS debe usarse un preprocessador o framework.
-  - https://medium.com/angular-chile/integrar-frameworks-css-en-angular-d2cc98a8284f ?
-
-(o utilizar el TP (idea) del año 2017)
+## Tecnologías:
+- NodeJS
+- Express
+- Angular
+- MySQL
+- Sequelize
+- FW CSS [Chota](https://jenil.github.io/chota/)
 
 ### 1.2 - Funcionalidad
 
