@@ -1,8 +1,8 @@
-# Enunciado general del tp.
+# Enunciado general del TP:
 
 En resumen se trata de un sistema de administración de "tokens", que permite transacciones entre usuarios de una moneda virtual sin valor real. Este sistema puede usarse tanto de manera lúdica como seria (algunos ejemplos serían usarlo como programa de recompensas de alguna tienda o como administración de puntaje de alguna dinámica informal).
 
-tokenizate.com.ar
+[Sistema de Tokens](tokenizate.com.ar)
 
 ## ABMC
 - Usuario
