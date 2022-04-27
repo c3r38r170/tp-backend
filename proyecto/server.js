@@ -3,6 +3,8 @@ var express = require("express");
 // Use body-parser
 var bodyParser = require("body-parser");
 
+var db=require("./backend/datos/Sequelize")
+
 // Create new instance of the express server
 var app = express();
 
@@ -17,6 +19,8 @@ app.use(bodyParser.json());
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
+app.use('/api',require('./backend/rutas'))
+
 // Init the server
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
@@ -27,6 +31,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
  *   GET: Get server status
  *   PS: it's just an example, not mandatory
  */
-app.get("/api/status", function (req, res) {
+/*app.get("/api/status", function (req, res) {
     res.status(200).json({ status: "UP" });
-});
+});*/
