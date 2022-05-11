@@ -25,13 +25,6 @@ function create(usuario) {
 }
 
 function updateUsuario(usuario, id) {
-    var updateUsuario = {
-        title: usuario.title,
-        technologies: usuario.technologies,
-        description: usuario.description,
-        budget: usuario.budget,
-        contact_email: usuario.contact_email
-    };
-    return Usuario.update(updateUsuario, { where: { id } });
+    return Usuario.update(usuario, { where: { id } });
 }
 module.exports = usuarioDao;

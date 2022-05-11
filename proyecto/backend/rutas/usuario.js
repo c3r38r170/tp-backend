@@ -1,14 +1,3 @@
-const express = require('express');
-const gigController = require('../controller/gig.controller');
-
-router.post('/', gigController.addGig);
-router.get('/', gigController.findGigs);
-router.get('/:id', gigController.findGigById);
-router.put('/:id', gigController.updateGig);
-router.delete('/:id', gigController.deleteById);
-
-module.exports = router;
-
 const router = require('express').Router()
 const usuarioController = require('../controlador/usuario');
 
