@@ -5,8 +5,8 @@ router.get('/status',function (req, res) {
     res.status(200).json({ status: "UP" });
 })
 
-const usuario = require('./usuario');
+const usuarioRouter = require('./usuario');
 
-router.use('/usuario', usuario);
+router.use('/usuarios', usuarioRouter);
 
 module.exports = router
