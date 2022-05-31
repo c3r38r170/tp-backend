@@ -33,7 +33,7 @@ export class UsuarioService {
 }
 
 export interface Usuario{
-  id: string;
+  id?: string;
   correo: string;
   contrasenia?: string;
   nombreUsuario: string;

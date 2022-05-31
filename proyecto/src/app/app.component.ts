@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
       .subscribe((result: any) => {
         this.status = result.status;
       });
+    
     this.usuarioService
       .getAll()
       .subscribe((result: any)=>{
@@ -33,8 +34,17 @@ export class AppComponent implements OnInit {
   }
 
   nuevoUsuario(e:Event) {
-    console.log(e)
     e.preventDefault()
+    
+    // TODO investigar si esto puede ser más feo
+    let u: Usuario=((Object.fromEntries(new FormData(e.target as HTMLFormElement))) as unknown) as Usuario;
+    
+    this.usuarioService
+      .create(u)
+      .subscribe((result: any) => {
+        // TODO handle errors
+        this.usuarios.push(u);
+      })
   }
 
 }

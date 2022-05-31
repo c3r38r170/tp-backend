@@ -8,23 +8,20 @@ const Usuario = db.define('usuario', {
         primaryKey: true,
         autoIncrement: true
     },
-    nombre_completo: {
+    nombreCompleto: {
         type: Sequelize.STRING,
         allowNull: false
     },
     DNI: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
-    nombre_usuario: {
+    nombreUsuario: {
         type: Sequelize.STRING,
         allowNull: false
     },
     contrasenia: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    contact_email: {
         type: Sequelize.STRING,
         allowNull: false
     },
@@ -37,5 +34,6 @@ const Usuario = db.define('usuario', {
         allowNull: false
     }
 });
+/* await  */Usuario.sync();
 
 module.exports = Usuario;
