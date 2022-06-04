@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
       })
   }
 
-  nuevoUsuario(e:Event) {
+  enviarUsuario(e:Event) {
     e.preventDefault()
     
     // TODO investigar si esto puede ser más feo
@@ -43,8 +43,20 @@ export class AppComponent implements OnInit {
       .create(u)
       .subscribe((result: any) => {
         // TODO handle errors
-        this.usuarios.push(u);
+        this.usuarios.push(result as Usuario);
       })
+  }
+
+  eliminarUsuario() {
+    let IDUsuario:number=Number.parseInt((document.getElementById('usuarios-lista') as HTMLInputElement)?.value);
+    
+    if(IDUsuario)
+      this.usuarioService
+        .delete(IDUsuario)
+        .subscribe((result: any)=>{
+          // TODO handle errors
+          this.usuarios.splice(this.usuarios.findIndex(u=>u.ID==IDUsuario),1)
+        })
   }
 
 }
