@@ -4,13 +4,33 @@
 <form (submit)="nuevoUsuario($event)">
 	<fieldset>
 		<!-- <input type="hidden" name="id"> -->
-		<input type="text" name="nombreCompleto" placeholder="Nombre completo" required  value="asd">
-		<input type="number" name="DNI" placeholder="DNI" required  onclick="this.value=Math.trunc(Math.random()*10**6)">
-		<input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required  value="asd">
-		<input type="password" name="contrasenia" placeholder="Contraseña" required  value="asd">
-		<input type="password" id="contrasenia2" placeholder="Repetir contraseña" required  value="asd">
-		<input type="email" name="correo" placeholder="Correo electrónico" required  value="asd@asd.asd">
-		<input type="submit" value="Crear">
+		<label class="row">
+			<span class="col-1 is-center">Nombre completo</span>
+			<input type="text" name="nombreCompleto" placeholder="Nombre completo" required class="col"  value="asd">
+		</label>
+		<label class="row">
+			<span class="col-1 is-center">DNI</span>
+			<input type="number" name="DNI" placeholder="DNI" required class="col"  onclick="this.value=Math.trunc(Math.random()*10**6)">
+		</label>
+		<label class="row">
+			<span class="col-1 is-center">Nombre de usuario</span>
+			<input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required class="col"  value="asd">
+		</label>
+		<label class="row">
+			<span class="col-1 is-center">Contraseña</span>
+			<input type="password" name="contrasenia" placeholder="Contraseña" required class="col"  value="asd">
+		</label>
+		<label class="row">
+			<span class="col-1 is-center">Repetir contraseña</span>
+			<input type="password" id="contrasenia2" placeholder="Repetir contraseña" required class="col"  value="asd">
+		</label>
+		<label class="row">
+			<span class="col-1 is-center">Correo electrónico</span>
+			<input type="email" name="correo" placeholder="Correo electrónico" required class="col"  value="asd@asd.asd">
+		</label>
+		<div class="row">
+			<input type="submit" value="Crear" class="col-1">
+		</div>
 	</fieldset>
 </form>
 
