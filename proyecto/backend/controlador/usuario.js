@@ -10,8 +10,8 @@ var usuarioController = {
 function addUsuario(req, res) {
     let usuario = req.body;
     usuario.habilitado=true;
-    usuarioDao.create(usuario).
-        then((data) => {
+    usuarioDao.create(usuario)
+        .then((data) => {
             res.send(data);
         })
         .catch((error) => {

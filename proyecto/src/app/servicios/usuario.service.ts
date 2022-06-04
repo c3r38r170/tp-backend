@@ -19,21 +19,21 @@ export class UsuarioService {
   }
 
   getByID(id:number){
-    return this.clienteHTTP.get(URL+`/${id}`);
+    return this.clienteHTTP.get(this.URL+`/${id}`);
   }
 
   delete(id:number){
-    return this.clienteHTTP.delete(URL+`/${id}`);
+    return this.clienteHTTP.delete(this.URL+`/${id}`);
   }
 
   edit(usuario: Usuario){
-    return this.clienteHTTP.patch(URL+`/${usuario.id/* .getID() */}`,usuario/* .serialize() */);
+    return this.clienteHTTP.patch(this.URL+`/${usuario.ID/* .getID() */}`,usuario/* .serialize() */);
   }
 
 }
 
 export interface Usuario{
-  id?: string;
+  ID?: number;
   correo: string;
   contrasenia?: string;
   nombreUsuario: string;
