@@ -41,7 +41,7 @@ Santiago Abud - legajo 47015
 
 |Requerimiento funcional|Descripcion|Cumple?|
 |:-|:-|-|
-|ABMC simple|Usuario|
+|ABMC simple|Usuario|:heavy_check_mark:
 |ABMC dependiente|Tokens|
 |Listado simple|Tipos de tokens|
 |Listado complejo obligatorio|Personas|

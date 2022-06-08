@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
           this.usuarios.splice(this.usuarios.findIndex(uv=>uv.ID==u.ID),1,u)
         })
     }else{
+      delete u.ID;
       this.usuarioService
         .create(u)
         .subscribe((result: any) => {
