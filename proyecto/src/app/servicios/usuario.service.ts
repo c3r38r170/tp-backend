@@ -11,7 +11,7 @@ export class UsuarioService {
   constructor(private clienteHTTP: HttpClient) { }
 
   create(usuario: Usuario) {
-    return this.clienteHTTP.post(this.URL+'/',usuario/* .serialize() */);
+    return this.clienteHTTP.post(this.URL+'/',usuario);
   }
   
   getAll(){
@@ -27,7 +27,7 @@ export class UsuarioService {
   }
 
   edit(usuario: Usuario){
-    return this.clienteHTTP.patch(this.URL+`/${usuario.ID/* .getID() */}`,usuario/* .serialize() */);
+    return this.clienteHTTP.put(this.URL+`/${usuario.ID}`,usuario);
   }
 
 }
