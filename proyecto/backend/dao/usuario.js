@@ -8,11 +8,11 @@ var usuarioDao = {
 }
 
 function findAll() {
-    return Usuario.findAll();
+    return Usuario.findAll({include:['tokens']});
 }
 
 function findById(id) {
-    return Usuario.findByPk(id);
+    return Usuario.findByPk(id,{include:['tokens']});
 }
 
 function deleteById(id) {
