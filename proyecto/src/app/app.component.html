@@ -3,7 +3,7 @@
 <h2>Creación de usuario</h2>
 <form (submit)="enviarUsuario($event)" id="usuarios-formulario">
 	<fieldset>
-		<!-- <input type="hidden" name="id"> -->
+		<input type="hidden" name="ID">
 		<label class="row">
 			<span class="col-1 is-center">Nombre completo</span>
 			<input type="text" name="nombreCompleto" placeholder="Nombre completo" required class="col"  value="asd">
@@ -29,7 +29,8 @@
 			<input type="email" name="correo" placeholder="Correo electrónico" required class="col"  value="asd@asd.asd">
 		</label>
 		<div class="row">
-			<input type="submit" value="Crear" class="col-1">
+			<input type="submit" value="{{editando?'Editar':'Crear'}}" class="col-1">
+			<input type="reset" class="button error col-1 {{editando?'':'is-hidden'}}" (click)="cancelarEdicion()" value="Terminar">
 		</div>
 	</fieldset>
 </form>
@@ -37,7 +38,7 @@
 <hr>
 
 <h2>Listado de usuarios:</h2>
-<select id="usuarios-lista">
+	<select id="usuarios-lista" [disabled]=editando>
 	<option *ngFor="let usuario of usuarios" value="{{usuario.ID}}">
 		{{usuario.nombreCompleto}}
 	</option>
@@ -46,3 +47,7 @@
 <hr>
 
 <button (click)="eliminarUsuario()" class="button primary"><h2>Eliminar usuario elegido</h2></button>
+
+<hr>
+
+<button (click)="editarUsuario()" class="button primary"><h2>Editar usuario elegido</h2></button>
