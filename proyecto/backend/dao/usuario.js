@@ -1,4 +1,5 @@
-const Usuario = require('../modelos/usuario');
+const {Usuario,Token} = require('../modelos/usuario');
+const Sequelize =require('sequelize');
 var usuarioDao = {
     findAll: findAll,
     create: create,
@@ -7,8 +8,34 @@ var usuarioDao = {
     updateUsuario: updateUsuario
 }
 
-function findAll() {
-    return Usuario.findAll({include:['tokens']});
+function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokensAsociadas=false}={}) {
+    let attributes =[
+        'ID'
+        ,'nombreCompleto'
+        ,'nombreUsuario'
+        ,'DNI'
+        ,'correo'
+    ];
+    let findOptions={
+        include:[{
+            model:Token
+            ,attributes: incluirTokensAsociadas?['ID']:[]
+            ,as:'tokensAsociadas'
+        }]
+        ,attributes
+    }
+
+    if(incluirContrasenia)
+        attributes.push('contrasenia');
+    if(incluirHabilitado)
+        attributes.push('habilitado');
+    if(!incluirTokensAsociadas){
+        attributes.push([Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']);
+        findOptions.group=['usuario.ID'];
+    }
+
+    findOptions.attributes = attributes;
+    return Usuario.findAll(findOptions);
 }
 
 function findById(id) {

@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const db = require('../datos/db');
 
-const Token = db.define('tokens', {
+const Token = db.define('token', {
     ID: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -42,9 +42,13 @@ const Usuario = db.define('usuario', {
     }
 });
 
-Usuario.hasMany(Token,{ as:'tokens' });
+Usuario.hasMany(Token,{
+    as:'tokensAsociadas'
+}/* {
+    foreignKey: 'clubId'
+} */);
 
 Token.sync();
 Usuario.sync();
 
-module.exports = Usuario;
+module.exports = {Usuario,Token};

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-// import { Usuario } from '../modelos/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +37,5 @@ export interface Usuario{
   contrasenia?: string;
   nombreUsuario: string;
   nombreCompleto: string;
+  tokens: number;
 }

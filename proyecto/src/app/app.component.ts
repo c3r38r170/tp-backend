@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { Usuario } from './modelos/usuario';
 import { ServidorService } from './servicios/servidor.service';
 import { UsuarioService,Usuario } from './servicios/usuario.service';
 
@@ -74,7 +73,6 @@ export class AppComponent implements OnInit {
     let IDUsuario:number=Number.parseInt((document.getElementById('usuarios-lista') as HTMLInputElement)?.value);
     let u = this.usuarios.find(u=>u.ID==IDUsuario);
     for(let prop in u) {
-      // console.log(prop);
       let input=document.getElementsByName(prop);
       if(input.length)
         ( input[0] as HTMLInputElement).value=(u as any)[prop];
