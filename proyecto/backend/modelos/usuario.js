@@ -42,13 +42,17 @@ const Usuario = db.define('usuario', {
     }
 });
 
+Token.belongsTo(Usuario,{
+    as:'duenio'
+    ,onDelete: 'cascade'
+})
 Usuario.hasMany(Token,{
     as:'tokensAsociadas'
-}/* {
-    foreignKey: 'clubId'
-} */);
+    ,foreignKey: 'duenioID'
+    ,onDelete: 'cascade'
+});
 
-Token.sync();
 Usuario.sync();
+Token.sync();
 
 module.exports = {Usuario,Token};
