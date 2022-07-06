@@ -47,13 +47,18 @@ function deleteById(id) {
 }
 
 async function create(usuario) {
-    var newUsuario = new Usuario(usuario);
-    return newUsuario.save();
+    usuario.tokensAsociadas=new Array(+usuario.tokens).fill({});
+    console.log(usuario);
+    return Usuario.create(usuario,{
+        include:[{
+            model:Token
+            ,as:'tokensAsociadas'
+        }]
+    });
 }
 
 async function updateUsuario(usuario, id) {
     let oldUsuario=await findById(id);
-    // console.log(oldUsuario);
     let diferencia=usuario.tokens-oldUsuario.tokensAsociadas.length;
     if(diferencia>0){
         await aniadirTokens(oldUsuario,diferencia);
@@ -68,9 +73,9 @@ async function aniadirTokens(usuario,cantidad){
         return;
 
     return Token.bulkCreate(new Array(cantidad).fill(new Token()))
-    .then(nuevasTokens=>{
-        usuario.setTokensAsociadas(nuevasTokens);
-    });
+        .then(nuevasTokens=>{
+            usuario.setTokensAsociadas(nuevasTokens);
+        });
 }
 
 async function quitarTokens(usuario,cantidad){
