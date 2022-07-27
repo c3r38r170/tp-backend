@@ -34,8 +34,12 @@ export class AppComponent implements OnInit {
       })
   }
 
-  obtenerUsuarioActual():number{
+  obtenerIDUsuarioActual():number{
     return Number.parseInt((document.getElementById('usuarios-lista') as HTMLInputElement)?.value)
+  }
+
+  obtenerUsuarioActual():Usuario|undefined{
+    return this.usuarios.find(u=>u.ID==this.obtenerIDUsuarioActual());
   }
 
   enviarUsuario(e:Event) {
@@ -63,7 +67,7 @@ export class AppComponent implements OnInit {
   }
 
   eliminarUsuario() {
-    let IDUsuario:number=this.obtenerUsuarioActual();
+    let IDUsuario:number=this.obtenerIDUsuarioActual();
     
     if(IDUsuario){
       this.esperando=true;
@@ -81,9 +85,10 @@ export class AppComponent implements OnInit {
   }
 
   editarUsuario() {
-    let IDUsuario:number=this.obtenerUsuarioActual();
+    let IDUsuario:number=this.obtenerIDUsuarioActual();
     let u = this.usuarios.find(u=>u.ID==IDUsuario);
     for(let prop in u) {
+      console.log(prop)
       let input=document.getElementsByName(prop);
       if(input.length)
         ( input[0] as HTMLInputElement).value=(u as any)[prop];
@@ -94,6 +99,10 @@ export class AppComponent implements OnInit {
   cancelarEdicion(){
     (document.getElementById('usuarios-formulario') as HTMLFormElement).reset();
     this.editando=false;
+  }
+
+  enviarTokens(e:Event){
+
   }
 
 }
