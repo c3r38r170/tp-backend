@@ -28,6 +28,12 @@ export class UsuarioService {
   edit(usuario: Usuario){
     return this.clienteHTTP.put(this.URL+`/${usuario.ID}`,usuario);
   }
+  enviarTokens(IDEmisor:number,IDReceptor:number,tokens:number){
+    return this.clienteHTTP.put(this.URL+`/${IDEmisor}/tokens`,{
+      receptorID:IDReceptor
+      ,tokens
+    });
+  }
 
 }
 

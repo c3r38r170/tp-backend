@@ -38,8 +38,12 @@ export class AppComponent implements OnInit {
     return Number.parseInt((document.getElementById('usuarios-lista') as HTMLInputElement)?.value)
   }
 
-  obtenerUsuarioActual():Usuario|undefined{
-    return this.usuarios.find(u=>u.ID==this.obtenerIDUsuarioActual());
+  obtenerUsuarioActual():Usuario{
+    return this.obtenerUsuarioPorID(this.obtenerIDUsuarioActual());
+  }
+
+  obtenerUsuarioPorID(ID:number):Usuario{
+    return this.usuarios.find(u=>u.ID==ID) as Usuario;
   }
 
   enviarUsuario(e:Event) {
@@ -78,7 +82,7 @@ export class AppComponent implements OnInit {
           // TODO handle errors
           this.usuarios.splice(this.usuarios.findIndex(u=>u.ID==IDUsuario),1);
           this.esperando=false;
-          if(this.editando) // La eliminación usa el mismo campo que la edición.
+          if(this.editando) // La eliminación usa el mismo campo que la edición, porque se bloquean los botones.
             this.cancelarEdicion();
         })
     }
@@ -87,8 +91,7 @@ export class AppComponent implements OnInit {
   editarUsuario() {
     let IDUsuario:number=this.obtenerIDUsuarioActual();
     let u = this.usuarios.find(u=>u.ID==IDUsuario);
-    for(let prop in u) {
-      console.log(prop)
+    for(let prop in u /* as Usuario */) {
       let input=document.getElementsByName(prop);
       if(input.length)
         ( input[0] as HTMLInputElement).value=(u as any)[prop];
@@ -102,7 +105,33 @@ export class AppComponent implements OnInit {
   }
 
   enviarTokens(e:Event){
+    e.preventDefault();
 
+    let fd=new FormData(e.target as HTMLFormElement);
+    let emisor=this.obtenerUsuarioPorID(this.obtenerIDUsuarioActual())
+      ,receptor=this.obtenerUsuarioPorID(Number.parseInt(fd.get('usuario')?.valueOf() as string)) 
+      ,tokens=Number.parseInt(fd.get('tokens')?.valueOf() as string);
+
+    this.esperando=true;
+    this.usuarioService
+      .enviarTokens(
+        emisor.ID as number
+        ,receptor.ID as number
+        ,tokens
+      )
+      .subscribe((result: any)=>{
+        // TODO handle errors
+        emisor.tokens-=tokens;
+        receptor.tokens+=tokens;
+        
+        // La eliminación usa el mismo campo que la edición, porque se bloquean los botones.
+        if(this.editando){
+          let campoTokens=document.getElementById("usuarios-formulario-tokens") as HTMLInputElement;
+          if((+campoTokens.value)>emisor.tokens)
+            campoTokens.value=emisor.tokens.toString();
+        } 
+        this.esperando=false;
+      });
   }
 
 }

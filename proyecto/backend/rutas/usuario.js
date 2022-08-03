@@ -11,6 +11,8 @@ router.delete('/:id',usuarioController.deleteById)
 
 router.put('/:id',usuarioController.updateUsuario)
 
+router.put('/:id/tokens',usuarioController.enviarTokens)
+
 router.get('/',usuarioController.findUsuarios)
 
 module.exports = router

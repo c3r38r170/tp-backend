@@ -4,7 +4,8 @@ var usuarioController = {
     findUsuarios: findUsuarios,
     findUsuarioById: findUsuarioById,
     updateUsuario: updateUsuario,
-    deleteById: deleteById
+    deleteById: deleteById,
+    enviarTokens: enviarTokens
 }
 
 function addUsuario(req, res) {
@@ -58,6 +59,16 @@ function updateUsuario(req, res) {
 function findUsuarios(req, res) {
     usuarioDao.findAll().
         then((data) => {
+            res.send(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function enviarTokens(req, res) {
+    usuarioDao.enviarTokens(req.params.id,req.body.receptorID,req.body.tokens)
+        .then((data) => {
             res.send(data);
         })
         .catch((error) => {

@@ -6,6 +6,7 @@ var usuarioDao = {
     findById: findById,
     deleteById: deleteById,
     updateUsuario: updateUsuario
+    ,enviarTokens
 }
 
 function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokensAsociadas=false}={}) {
@@ -86,6 +87,26 @@ async function quitarTokens(usuario,cantidad){
     for(let i=0;i<cantidad;i++)
         tokensAsociadas[i].destroy();
     // await usuario.removeTokensAsociadas(tokensAsociadas.splice(0,cantidad));
+}
+
+async function enviarTokens(emisorID,receptorID,cantidad){
+    // findById(em)
+    let emisor=await findById(emisorID);
+    let receptor=await findById(receptorID);
+    
+    let tokensEnJuego=await emisor.getTokensAsociadas();
+    // console.log(tokensEnJuego)
+    receptor.addTokensAsociadas(tokensEnJuego.slice(0,cantidad));
+    
+    /* for(let i=0;i<cantidad;i++){
+
+        receptor.tokensAsociadas.push(emisor.tokensAsociadas[0])
+        emisor.tokensAsociadas.splice(0,1);
+    } */
+    
+    return Promise.all(
+        [/* emisor.save(), */receptor.save()]
+    );
 }
 
 module.exports = usuarioDao;
