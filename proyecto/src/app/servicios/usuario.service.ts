@@ -34,6 +34,9 @@ export class UsuarioService {
       ,tokens
     });
   }
+  getFuzzilyByName(nombre:string) {
+    return this.clienteHTTP.get(this.URL+`/buscar/${nombre}`);
+  }
 
 }
 

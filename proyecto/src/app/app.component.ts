@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   title = 'node-express-angular';
   status = 'DOWN';
   usuarios: Usuario[]=<any>[];
+  usuariosEnvio: Usuario[]=<any>[];
   permisos: Permiso[]=<any>[];
   editando=false;
   esperando=false;
@@ -143,4 +144,15 @@ export class AppComponent implements OnInit {
       });
   }
 
+  normalizarTexto(texto:String){
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
+  }
+
+  actualizarListadoEnvio(e:Event){
+    this.usuarioService
+      .getFuzzilyByName((e.target as HTMLInputElement).value)
+      .subscribe((result: any)=>{
+        this.usuariosEnvio=result;
+      });
+  }
 }

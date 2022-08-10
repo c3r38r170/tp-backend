@@ -6,6 +6,7 @@ var usuarioController = {
     updateUsuario: updateUsuario,
     deleteById: deleteById,
     enviarTokens: enviarTokens
+    ,findUsuariosFuzzilyByName
 }
 
 function addUsuario(req, res) {
@@ -68,6 +69,16 @@ function findUsuarios(req, res) {
 
 function enviarTokens(req, res) {
     usuarioDao.enviarTokens(req.params.id,req.body.receptorID,req.body.tokens)
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function findUsuariosFuzzilyByName(req, res) {
+    usuarioDao.findFuzzilyByName(req.params.query)
         .then((data) => {
             res.send(data);
         })

@@ -7,6 +7,7 @@ var usuarioDao = {
     deleteById: deleteById,
     updateUsuario: updateUsuario
     ,enviarTokens
+    ,findFuzzilyByName
 }
 
 function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokensAsociadas=false}={}) {
@@ -107,6 +108,16 @@ async function enviarTokens(emisorID,receptorID,cantidad){
     return Promise.all(
         [/* emisor.save(), */receptor.save()]
     );
+}
+
+async function findFuzzilyByName(consulta){
+    return Usuario.findAll({
+        where:{
+            nombreCompleto:{
+                [Sequelize.Op.like]:`%${consulta}%`
+            }
+        }
+    });
 }
 
 module.exports = usuarioDao;
