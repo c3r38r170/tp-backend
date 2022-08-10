@@ -122,6 +122,11 @@ export class AppComponent implements OnInit {
       ,receptor=this.obtenerUsuarioPorID(Number.parseInt(fd.get('usuario')?.valueOf() as string)) 
       ,tokens=Number.parseInt(fd.get('tokens')?.valueOf() as string);
 
+    if(!receptor || !emisor || !tokens){
+      alert('No se puede llevar a cabo esta operación.');
+      return;
+    }
+
     this.esperando=true;
     this.usuarioService
       .enviarTokens(
@@ -155,4 +160,9 @@ export class AppComponent implements OnInit {
         this.usuariosEnvio=result;
       });
   }
+
+  limitarEnvioTokens(e:Event){
+    (document.getElementById('tokens-cantidad')as HTMLInputElement).max=''+(this.obtenerUsuarioActual().tokens);
+  }
+
 }
