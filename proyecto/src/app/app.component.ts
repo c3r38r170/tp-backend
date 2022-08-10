@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServidorService } from './servicios/servidor.service';
 import { UsuarioService,Usuario } from './servicios/usuario.service';
+import { PermisoService,Permiso } from './servicios/permiso.service';
 
 
 @Component({
@@ -12,11 +13,13 @@ export class AppComponent implements OnInit {
   title = 'node-express-angular';
   status = 'DOWN';
   usuarios: Usuario[]=<any>[];
+  permisos: Permiso[]=<any>[];
   editando=false;
   esperando=false;
 
   constructor(
     private estadoServidor: ServidorService
+    ,private permisoService: PermisoService
     ,private usuarioService: UsuarioService
   ) { }
 
@@ -31,7 +34,13 @@ export class AppComponent implements OnInit {
       .getAll()
       .subscribe((result: any)=>{
         this.usuarios=result;
-      })
+      });
+      
+    this.permisoService
+      .getAll()
+      .subscribe((result: any)=>{
+        this.permisos=result;
+      });
   }
 
   obtenerIDUsuarioActual():number{
