@@ -49,5 +49,6 @@ export interface Usuario{
   nombreCompleto: string;
   DNI?: string;
   tokens: number;
+  tokensAsociadas?: any[];
   permisos?:Permiso[]
 }

@@ -60,7 +60,11 @@ export class AppComponent implements OnInit {
     e.preventDefault()
     
     // TODO investigar si esto puede ser más feo
-    let u: Usuario=((Object.fromEntries(new FormData(e.target as HTMLFormElement))) as unknown) as Usuario;
+    let  fd=new FormData(e.target as HTMLFormElement);
+    let u: Usuario=((Object.fromEntries(fd)) as unknown) as Usuario;
+    u.permisos=fd.getAll('permisos[]').map(val=>{
+      return ({ID:+val}) as Permiso;
+    });
     
     if(this.editando){
       this.usuarioService
@@ -99,6 +103,7 @@ export class AppComponent implements OnInit {
   }
 
   editarUsuario() {
+    // TODO edición de permisos
     let IDUsuario:number=this.obtenerIDUsuarioActual();
     let u = this.usuarios.find(u=>u.ID==IDUsuario);
     for(let prop in u /* as Usuario */) {
@@ -171,12 +176,15 @@ export class AppComponent implements OnInit {
       .subscribe((result: any)=>{
         let usuarioConseguido=result as Usuario;
 
-        for(let propiedadSimple of ['nombreCompleto','DNI','nombreUsuario','correo','tokens']){
+        for(let propiedadSimple of ['nombreCompleto','DNI','nombreUsuario','correo'/* ,'tokens' */]){
           (document.getElementById('detalle-'+propiedadSimple) as HTMLElement).innerText=(usuarioConseguido as any)[propiedadSimple];
         }
 
+        (document.getElementById('detalle-tokens') as HTMLElement).innerText=''+(usuarioConseguido.tokensAsociadas||[]).length;
+
         let listaPermiso=(document.getElementById('detalle-permisos') as HTMLElement);
         listaPermiso.innerHTML='';
+        console.log(usuarioConseguido.permisos);
         for(let permiso of (usuarioConseguido.permisos||[])){
           let itemPermiso=document.createElement('LI');
           itemPermiso.innerText=permiso.descripcion;

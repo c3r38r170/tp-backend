@@ -1,6 +1,6 @@
 const {Usuario,Token} = require('../modelos/usuario');
-const {Permiso} = require('../modelos/permiso');
-const {permisoDao} = require('./permiso');
+const {Permiso,UsuarioPermiso} = require('../modelos/permiso');
+const permisoDao = require('./permiso');
 const Sequelize =require('sequelize');
 var usuarioDao = {
     findAll: findAll,
@@ -46,9 +46,9 @@ function findById(id) {
     return Usuario.findByPk(id,{
         include:[{
             model:Token
-            ,attributes: []
+            // ,attributes: []
             ,as:'tokensAsociadas'
-            ,group:['usuario.ID']
+            // ,group:['usuario.ID']
         },Permiso/* {
             model:Permiso
             // ,attributes: []
@@ -61,7 +61,7 @@ function findById(id) {
             ,'nombreUsuario'
             ,'DNI'
             ,'correo'
-            ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']
+            // ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']
             // ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'permisos']
         ]
     });
@@ -73,13 +73,25 @@ function deleteById(id) {
 
 async function create(usuario) {
     usuario.tokensAsociadas=new Array(+usuario.tokens).fill({});
-    console.log(usuario);
-    return Usuario.create(usuario,{
+    let permisos=usuario.permisos;
+    delete usuario.permisos;
+
+    let nuevoUsuario=await Usuario.create(usuario,{
         include:[{
             model:Token
             ,as:'tokensAsociadas'
-        }]
+        },Permiso]
     });
+
+    let permisosReales=[];
+    for(let {ID:permisoID} of permisos) {
+        permisosReales.push(
+            await permisoDao.findById(permisoID)
+        );
+    }
+    await nuevoUsuario.setPermisos(permisosReales);
+    await nuevoUsuario.save();
+    return findById(nuevoUsuario.ID);
 }
 
 async function updateUsuario(usuario, id) {

@@ -32,11 +32,11 @@
 			<span class="col-1 is-center">Tokens</span>
 			<input id="usuarios-formulario-tokens" type="number" name="tokens" placeholder="Cantidad de tokens" required class="col"  value="0">
 		</label>
-		<label class="row">
+		<label class="row" for="">
 			<span class="col-1 is-center">Permisos</span>
 			<fieldset id="usuarios-formulario-permisos">
 				<label *ngFor="let permiso of permisos">
-					<input value="{{permiso.ID}}" type=checkbox/>
+					<input value="{{permiso.ID}}" type=checkbox name=permisos[]/>
 					<span>{{permiso.descripcion}}</span>
 				</label>
 			</fieldset>
