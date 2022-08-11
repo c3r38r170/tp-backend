@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
+import { Permiso } from './permiso.service';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,7 @@ export interface Usuario{
   contrasenia?: string;
   nombreUsuario: string;
   nombreCompleto: string;
+  DNI?: string;
   tokens: number;
+  permisos?:Permiso[]
 }

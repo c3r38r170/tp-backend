@@ -1,4 +1,6 @@
 const {Usuario,Token} = require('../modelos/usuario');
+const {Permiso} = require('../modelos/permiso');
+const {permisoDao} = require('./permiso');
 const Sequelize =require('sequelize');
 var usuarioDao = {
     findAll: findAll,
@@ -41,7 +43,28 @@ function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokens
 }
 
 function findById(id) {
-    return Usuario.findByPk(id,{include:['tokensAsociadas']});
+    return Usuario.findByPk(id,{
+        include:[{
+            model:Token
+            ,attributes: []
+            ,as:'tokensAsociadas'
+            ,group:['usuario.ID']
+        },Permiso/* {
+            model:Permiso
+            // ,attributes: []
+            // ,as:'tokensAsociadas'
+            // ,group:['usuario.ID']
+        } */]
+        ,attributes:[
+            'ID'
+            ,'nombreCompleto'
+            ,'nombreUsuario'
+            ,'DNI'
+            ,'correo'
+            ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']
+            // ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'permisos']
+        ]
+    });
 }
 
 function deleteById(id) {

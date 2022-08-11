@@ -165,4 +165,24 @@ export class AppComponent implements OnInit {
     (document.getElementById('tokens-cantidad')as HTMLInputElement).max=''+(this.obtenerUsuarioActual().tokens);
   }
 
+  llenarDetalle(){
+    this.usuarioService
+      .getByID(this.obtenerIDUsuarioActual())
+      .subscribe((result: any)=>{
+        let usuarioConseguido=result as Usuario;
+
+        for(let propiedadSimple of ['nombreCompleto','DNI','nombreUsuario','correo','tokens']){
+          (document.getElementById('detalle-'+propiedadSimple) as HTMLElement).innerText=(usuarioConseguido as any)[propiedadSimple];
+        }
+
+        let listaPermiso=(document.getElementById('detalle-permisos') as HTMLElement);
+        listaPermiso.innerHTML='';
+        for(let permiso of (usuarioConseguido.permisos||[])){
+          let itemPermiso=document.createElement('LI');
+          itemPermiso.innerText=permiso.descripcion;
+          listaPermiso.appendChild(itemPermiso);
+        }
+      });
+  }
+
 }
