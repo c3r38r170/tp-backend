@@ -13,6 +13,7 @@ var app = express();
 // to consume and produce data through the 
 // exposed APIs
 app.use(bodyParser.json());
+// TODO ver si esto es necesario para asociar permisos.
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Create link to Angular build directory

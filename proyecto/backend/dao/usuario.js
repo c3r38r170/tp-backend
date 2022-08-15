@@ -12,6 +12,16 @@ var usuarioDao = {
     ,findFuzzilyByName
 }
 
+async function permisosIDsAPermisos(permisosIDs){
+    let permisosReales=[];
+    for(let {ID:permisoID} of permisosIDs) {
+        permisosReales.push(
+            await permisoDao.findById(permisoID)
+        );
+    }
+    return permisosReales;
+}
+
 function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokensAsociadas=false}={}) {
     let attributes =[
         'ID'
@@ -23,9 +33,9 @@ function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokens
     let findOptions={
         include:[{
             model:Token
-            ,attributes: incluirTokensAsociadas?['ID']:[]
+            // ,attributes: incluirTokensAsociadas?['ID']:[]
             ,as:'tokensAsociadas'
-        }]
+        },Permiso]
         ,attributes
     }
 
@@ -34,27 +44,26 @@ function findAll({incluirContrasenia=false,incluirHabilitado=false,incluirTokens
     if(incluirHabilitado)
         attributes.push('habilitado');
     if(!incluirTokensAsociadas){
-        attributes.push([Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']);
-        findOptions.group=['usuario.ID'];
+        // attributes.push([Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']);
+        // findOptions.group=['usuario.ID'];
     }
 
     findOptions.attributes = attributes;
-    return Usuario.findAll(findOptions);
+    return Usuario.findAll(findOptions).then(usuarios=>{
+        return usuarios.map(usuario=>{
+            // TODO DRY
+            usuario.setDataValue('tokens',usuario.tokensAsociadas.length);
+            return usuario;
+        })
+    });
 }
 
-function findById(id) {
-    return Usuario.findByPk(id,{
+async function findById(id) {
+    let usuario=await Usuario.findByPk(id,{
         include:[{
             model:Token
-            // ,attributes: []
             ,as:'tokensAsociadas'
-            // ,group:['usuario.ID']
-        },Permiso/* {
-            model:Permiso
-            // ,attributes: []
-            // ,as:'tokensAsociadas'
-            // ,group:['usuario.ID']
-        } */]
+        },Permiso]
         ,attributes:[
             'ID'
             ,'nombreCompleto'
@@ -62,9 +71,10 @@ function findById(id) {
             ,'DNI'
             ,'correo'
             // ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'tokens']
-            // ,[Sequelize.fn('count', Sequelize.col('tokensAsociadas.ID')), 'permisos']
         ]
     });
+    usuario.setDataValue('tokens',usuario.tokensAsociadas.length);
+    return usuario;
 }
 
 function deleteById(id) {
@@ -83,25 +93,24 @@ async function create(usuario) {
         },Permiso]
     });
 
-    let permisosReales=[];
-    for(let {ID:permisoID} of permisos) {
-        permisosReales.push(
-            await permisoDao.findById(permisoID)
-        );
-    }
+    let permisosReales=await permisosIDsAPermisos(permisos)
     await nuevoUsuario.setPermisos(permisosReales);
     await nuevoUsuario.save();
     return findById(nuevoUsuario.ID);
 }
 
 async function updateUsuario(usuario, id) {
+    
     let oldUsuario=await findById(id);
     let diferencia=usuario.tokens-oldUsuario.tokensAsociadas.length;
     if(diferencia>0){
         await aniadirTokens(oldUsuario,diferencia);
     }else if(diferencia<0){
         await quitarTokens(oldUsuario,-diferencia);
-    } 
+    }
+    
+    usuario.permisos=permisosIDsAPermisos(usuario.permisos);
+
     return Usuario.update(usuario, { where: { id } });
 }
 
