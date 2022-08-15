@@ -16,10 +16,27 @@ const Permiso = db.define('permiso', {
 });
 
 const UsuarioPermiso = db.define('usuario_permiso');
-Usuario.belongsToMany(Permiso, { through: UsuarioPermiso });
-Permiso.belongsToMany(Usuario, { through: UsuarioPermiso });
 
-UsuarioPermiso.sync();
-Permiso.sync();
+Permiso.sync()
+    .then(()=>{
+        Permiso.findAll()
+            .then(permisos=>{
+                if(! permisos.length){
+                    Permiso.bulkCreate([
+                        {
+                            descripcion:'Enviar Tokens'
+                        }
+                        ,{
+                            descripcion:'Crear Usuarios'
+                        }
+                    ])
+                }
+            });
+
+        Usuario.belongsToMany(Permiso, { through: UsuarioPermiso });
+        Permiso.belongsToMany(Usuario, { through: UsuarioPermiso });
+        
+        UsuarioPermiso.sync();
+    });
 
 module.exports = {Permiso};

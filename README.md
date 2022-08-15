@@ -4,6 +4,31 @@ En resumen se trata de un sistema de administración de "tokens", que permite tr
 
 [Sistema de Tokens](tokenizate.com.ar)
 
+## Cómo usar:
+
+### Base de datos
+
+Correr alguna base de datos.
+
+Añadir las credenciales en [el archivo de la base de datos](proyecto/backend/datos/db.js).
+
+Por default tiene configurado los datos de la base de datos MariaDB en mi localhost.
+
+### Proyecto
+
+Abrir la carpeta proyecto en la consola.
+
+    npm start 
+
+para el backend.
+Debería crear las tablas y un par de permisos solo.
+
+    ng serve
+
+Para el frontend.
+
+Como primer paso para usar todos los botones estaría crear un usuario.
+
 ## ABMC
 - Usuario
   - Nombre completo
