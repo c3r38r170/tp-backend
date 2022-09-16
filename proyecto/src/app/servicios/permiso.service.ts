@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
+import {API_URL} from './api-url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermisoService {
-  readonly URL = 'http://localhost:8080/api/permisos';
+  readonly URL = API_URL+'permisos/';
 
   constructor(private clienteHTTP: HttpClient) { }
 
   getAll(){
-    return this.clienteHTTP.get(this.URL+'/');
+    return this.clienteHTTP.get(this.URL);
   }
 
 }

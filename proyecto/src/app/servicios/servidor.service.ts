@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
+import { API_URL } from './api-url';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ export class ServidorService {
   constructor(private clienteHTTP: HttpClient) {}
 
   getStatus(){
-    return this.clienteHTTP.get('http://localhost:8080/api/status');
+    return this.clienteHTTP.get(API_URL+'status');
   }
 
 }
